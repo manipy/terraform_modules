@@ -1,0 +1,8 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and update with your actual values
+
+# Resource Group Name
+resource_group_name = "my-resource-group"
+
+# Note: VM configurations are defined in main.tf
+# You can also define them here and reference them in main.tf using variables
