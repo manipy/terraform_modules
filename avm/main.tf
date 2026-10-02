@@ -1,9 +1,9 @@
-# resource "azurerm_resource_group" "rg" {
-#   name     = var.resource_group_name
-#   location = var.resource_group_location
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.resource_group_location
 
-#   tags = var.tags
-# }
+  tags = var.tags
+}
 
 resource "azurerm_network_interface" "nic" {
   for_each = var.vms
@@ -58,13 +58,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
 resource "azurerm_windows_virtual_machine" "vm" {
   for_each = { for k, v in var.vms : k => v if v.os_type == "windows" }
 
-  name                            = each.key
-  location                        = azurerm_resource_group.rg.location
-  resource_group_name             = azurerm_resource_group.rg.name
-  network_interface_ids           = [azurerm_network_interface.nic[each.key].id]
-  size                            = each.value.vm_size
-  admin_username                  = each.value.admin_username
-  admin_password                  = each.value.admin_password
+  name                  = each.key
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.nic[each.key].id]
+  size                  = each.value.vm_size
+  admin_username        = each.value.admin_username
+  admin_password        = each.value.admin_password
 
   os_disk {
     name                 = "${each.key}-osdisk"
